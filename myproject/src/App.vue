@@ -2,8 +2,8 @@
   <div id="app">
     <h1> {{ title }} </h1>
     <Navbar />
-    <AllFriends />
-    <OnlineFriends />
+    <AllFriends :friends="friends" @delete="deleteFriend" />
+    <OnlineFriends :friends="friends" />
   </div>
 </template>
 
@@ -23,8 +23,22 @@ export default {
   },
   data() {
     return {
-      title: "My first Vue App"
+      title: "My first Vue App",
+      friends: [
+        { name: "Mario", online: true },
+        { name: "Luigi", online: false },
+        { name: "Toad", online: true },
+        { name: "Bowser", online: false }
+      ]
     };
+  },
+  methods: {
+    deleteFriend(payload) {
+      console.log(payload);
+      this.friends = this.friends.filter(friend => {
+        return friend.name !== payload.name;
+      });
+    }
   }
 };
 </script>
